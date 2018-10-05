@@ -1,6 +1,6 @@
 #for s in range(2, 5):
 if True:
-	size = 10000
+	size = 1000
 	out = open("inst_"+str(size), "w")
 	for i in range(0, size):
 		for j in range(0, size):

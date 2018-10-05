@@ -8,7 +8,7 @@ def generate(f, offsetX, offsetY, exp):
 	generate(f, offsetX+size, offsetY, exp-1)
 
 
-exp_glob = 20
+exp_glob = 12
 f = open("powers_"+str(exp_glob), "w")
 generate(f, 0, 0, exp_glob)
 f.close();

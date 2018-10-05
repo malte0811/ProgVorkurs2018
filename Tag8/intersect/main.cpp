@@ -2,11 +2,16 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <ctime>
 #include "line_sweep.hpp"
 #include "boxes.hpp"
 #include "quad_tree.hpp"
 
 int main(int argc, char** argv) {
+	if (argc<2) {
+		std::cout << "Missing instance name" << std::endl;
+		return 1;
+	}
 	std::vector<Rect> boxes;
 	std::ifstream in(argv[1]);
 	std::string line;
@@ -20,7 +25,18 @@ int main(int argc, char** argv) {
 		}
 		boxes.push_back(rect);
 	}
+	std::cout << "Line sweep..." << std::endl;
+	clock_t start = clock();
 	bool intersect = intersectsLineSweep(boxes);//intersectsQuadTree(boxes);//
-	std::cout << intersect << std::endl;
+	clock_t end = clock();
+	std::cout << "Found intersections: " << intersect << std::endl;
+	std::cout << "Took " <<  static_cast<double>(end-start)/ CLOCKS_PER_SEC << " seconds" << std::endl;
+	
+	std::cout << "Quad tree..." << std::endl;
+	start = clock();
+	intersect = intersectsQuadTree(boxes);
+	end = clock();
+	std::cout << "Found intersections: " << intersect << std::endl;
+	std::cout << "Took " <<  static_cast<double>(end-start)/ CLOCKS_PER_SEC << " seconds" << std::endl;
 	return 0;
 }
