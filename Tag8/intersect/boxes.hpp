@@ -19,8 +19,8 @@ public:
 	}
 	
 	inline bool intersects(const Rect& other) const {
-		return other[x_min]<_bounds[x_max] && other[x_max]>_bounds[x_min] &&
-				other[y_min]<_bounds[y_max] && other[y_max]>_bounds[y_min];
+		return other[x_min]<=_bounds[x_max] && other[x_max]>=_bounds[x_min] &&
+				other[y_min]<=_bounds[y_max] && other[y_max]>=_bounds[y_min];
 	}
 	const std::array<Coord, 4> _bounds;
 };

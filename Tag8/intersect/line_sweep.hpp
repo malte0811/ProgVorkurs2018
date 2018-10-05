@@ -3,31 +3,24 @@
 #include <vector>
 #include "boxes.hpp"
 struct SweepEvent {
-	const Rect* rect;
-	bool leftBorder;
+	SweepEvent(unsigned rectId, bool leftBorder, Coord border): _rectId(rectId), _leftBorder(leftBorder),
+		_border(border){}
+	unsigned _rectId;
+	bool _leftBorder;
+	Coord _border;
 	Coord getBorder() const;
 };
 bool operator<(const SweepEvent& a, const SweepEvent& b);
 
 bool intersectsLineSweep(const std::vector<Rect>& boxes);
 
-inline Coord SweepEvent::getBorder() const {
-	if (leftBorder) {
-		return (*rect)[x_min];
-	} else {
-		return (*rect)[x_max];
-	}
-}
-
 inline bool operator<(const SweepEvent& a, const SweepEvent& b) {
-	Coord borderA = a.getBorder();
-	Coord borderB = b.getBorder();
-	if (borderA<borderB) {
+	if (a._border<b._border) {
 		return true;
-	} else if (borderA>borderB) {
+	} else if (a._border>b._border) {
 		return false;
 	} else {
-		return a.leftBorder&&!b.leftBorder;
+		return a._leftBorder&&!b._leftBorder;
 	}
 }
 #endif

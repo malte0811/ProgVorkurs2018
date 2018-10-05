@@ -9,24 +9,25 @@ bool intersectsLineSweep(const std::vector<Rect>& boxes) {
 	std::cout << "Called" << std::endl;
 	std::vector<SweepEvent> events;
 	events.reserve(boxes.size()*2);
-	for (const Rect& r:boxes) {
-		events.push_back(SweepEvent{&r, true});
-		events.push_back(SweepEvent{&r, false});
+	for (unsigned i = 0;i<boxes.size();++i) {
+		events.push_back(SweepEvent(i, true, boxes[i][x_min]));
+		events.push_back(SweepEvent(i, false, boxes[i][x_max]));
 	}
 	std::cout << "Constructed events" << std::endl;
 	std::sort(events.begin(), events.end());
 	std::cout << "Sorted events" << std::endl;
-	std::map<Coord, const Rect*> boxesOnLine;
+	std::map<Coord, unsigned> boxesOnLine;
 	for (SweepEvent& event:events) {
-		Coord yPos = (*event.rect)[y_min];
-		if (event.leftBorder) {
+		const Rect& evRect = boxes[event._rectId];
+		Coord yPos = evRect[y_min];
+		if (event._leftBorder) {
 			if (boxesOnLine.count(yPos)>0) {
 				return true;
 			}
-			std::map<Coord, const Rect*>::iterator it = boxesOnLine.insert({yPos, event.rect}).first;
+			std::map<Coord, unsigned>::iterator it = boxesOnLine.insert({yPos, event._rectId}).first;
 			if (it!=boxesOnLine.begin()) {
 				--it;
-				if ((*(*it).second)[y_max]>=yPos) {
+				if (boxes[(*it).second][y_max]>=yPos) {
 					return true;
 				}
 				++it;
@@ -34,7 +35,7 @@ bool intersectsLineSweep(const std::vector<Rect>& boxes) {
 			++it;
 			
 			if (it!=boxesOnLine.end()) {
-				if ((*(*it).second)[y_min]<=(*event.rect)[y_max]) {
+				if (boxes[(*it).second][y_min]<=evRect[y_max]) {
 					return true;
 				}
 			}
