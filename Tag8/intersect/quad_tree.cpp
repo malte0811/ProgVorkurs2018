@@ -83,9 +83,9 @@ const Rect* QuadTree::insertAndIntersect(const Rect& r) {
 				}
 			}
 		}
+		_containedRects = std::vector<Rect>();
 	}
 
-	_containedRects.push_back(r);
 	for (unsigned i = 0;i<4;++i) {
 		if (_subTrees[i]->contains(r)) {
 			const Rect* intersect = _subTrees[i]->insertAndIntersect(r);

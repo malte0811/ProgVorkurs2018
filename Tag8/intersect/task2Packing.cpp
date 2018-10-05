@@ -119,7 +119,7 @@ int main (int count, char ** args){
 	ZweiD (args [1],1);
 	zeit2 = clock();
 	std::cout << "Berechnung dauerte " << static_cast<double>(zeit2-zeit1)/ CLOCKS_PER_SEC << " Sekunden"<< std::endl;
-	//std::cout << "Berechnung mit Vektorfeld (Skaliert mit 20)... "<< std::flush;
+	std::cout << "Berechnung mit Vektorfeld (Skaliert mit 20)... "<< std::flush;
 	//ZweiD (args [1],20);
 	zeit3 = clock();
 	//std::cout << "Berechnung dauerte " << static_cast<double>(zeit3-zeit2)/ CLOCKS_PER_SEC << " Sekunden"<< std::endl;

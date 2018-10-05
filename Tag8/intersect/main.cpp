@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	}
 	std::cout << "Line sweep..." << std::endl;
 	clock_t start = clock();
-	bool intersect = intersectsLineSweep(boxes);//intersectsQuadTree(boxes);//
+	bool intersect = intersectsLineSweep(boxes);
 	clock_t end = clock();
 	std::cout << "Found intersections: " << intersect << std::endl;
 	std::cout << "Took " <<  static_cast<double>(end-start)/ CLOCKS_PER_SEC << " seconds" << std::endl;
